@@ -254,6 +254,15 @@ describe('convert', () => {
     }
   });
 
+  it('should throw an error for switches with multiple default cases', () => {
+    const ast = convertCode('switch (true) { default: default: }');
+
+    const instance = new Converter(ast);
+    expect(() => instance.convertProgram()).toThrow(
+      "A 'default' clause cannot appear more than once in a 'switch' statement.",
+    );
+  });
+
   describe('allowInvalidAST', () => {
     const code = 'const;';
 
